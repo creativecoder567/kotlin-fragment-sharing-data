@@ -19,13 +19,6 @@ class VideoViewFragment : Fragment() {
 
     private var videoUri: Uri? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            videoUri = arguments.getParcelable(VID_URI)
-        }
-    }
-
     override fun onStart() {
         super.onStart()
 
@@ -55,13 +48,7 @@ class VideoViewFragment : Fragment() {
         private val TAG = VideoIntentFragment::class.qualifiedName
         private val VID_URI = "videoUri"
 
-        fun newInstance(uri: Uri): VideoViewFragment {
-            val fragment = VideoViewFragment()
-            val args = Bundle()
-            args.putParcelable(VID_URI, uri)
-            fragment.arguments = args
-            return fragment
-        }
+        @JvmStatic fun newInstance() = VideoViewFragment()
     }
 
 }

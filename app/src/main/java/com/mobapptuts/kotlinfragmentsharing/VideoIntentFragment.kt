@@ -19,8 +19,6 @@ class VideoIntentFragment : Fragment() {
     private var videoUri: Uri? = null
     private val VIDEO_APP_REQUEST_CODE = 1000
 
-    private var videoUriListener: OnFragmentVideoUriListener? = null
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -54,25 +52,8 @@ class VideoIntentFragment : Fragment() {
         }
 
         playButton.setOnClickListener {
-            videoUriListener?.onFragmentVideoUri(videoUri)
+            // Using the ViewModel to pass the videoUri
         }
-    }
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnFragmentVideoUriListener) {
-            videoUriListener = context
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        videoUriListener = null
-    }
-
-    interface OnFragmentVideoUriListener {
-        fun onFragmentVideoUri(uri: Uri?)
     }
 
     companion object {
