@@ -1,14 +1,17 @@
 package com.mobapptuts.kotlinfragmentsharing
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_video_intent.*
 
 
 class VideoIntentFragment : Fragment() {
@@ -31,6 +34,29 @@ class VideoIntentFragment : Fragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            VIDEO_APP_REQUEST_CODE -> {
+                if (resultCode == RESULT_OK)
+                    videoUri = data?.data
+            }
+            else -> Log.e(TAG, "Unrecognized request code $requestCode")
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        recordButton.setOnClickListener {
+            callVideoApp()
+        }
+
+        playButton.setOnClickListener {
+            videoUriListener?.onFragmentVideoUri(videoUri)
+        }
+    }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnFragmentVideoUriListener) {
@@ -46,7 +72,7 @@ class VideoIntentFragment : Fragment() {
     }
 
     interface OnFragmentVideoUriListener {
-        fun onFragmentVideoUri(uri: Uri)
+        fun onFragmentVideoUri(uri: Uri?)
     }
 
     companion object {
