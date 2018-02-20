@@ -1,23 +1,20 @@
 package com.mobapptuts.kotlinfragmentsharing
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [VideoIntentFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [VideoIntentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class VideoIntentFragment : Fragment() {
+
+    private var videoUri: Uri? = null
+    private val VIDEO_APP_REQUEST_CODE = 1000
 
     private var videoUriListener: OnFragmentVideoUriListener? = null
 
@@ -25,6 +22,13 @@ class VideoIntentFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_video_intent, container, false)
+    }
+
+    private fun callVideoApp() {
+        val videoCaptureIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+        if (videoCaptureIntent.resolveActivity(activity.packageManager) != null) {
+            startActivityForResult(videoCaptureIntent, VIDEO_APP_REQUEST_CODE)
+        }
     }
 
     override fun onAttach(context: Context?) {
