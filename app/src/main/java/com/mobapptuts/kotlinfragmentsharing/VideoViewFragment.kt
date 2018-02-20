@@ -2,7 +2,6 @@ package com.mobapptuts.kotlinfragmentsharing
 
 
 import android.arch.lifecycle.ViewModelProviders
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_video_view.*
  */
 class VideoViewFragment : Fragment() {
 
-    private var videoUri: Uri? = null
     private val videoUriViewModel by lazy {
         ViewModelProviders.of(activity).get(VideoUriViewModel::class.java)
     }
@@ -52,8 +50,6 @@ class VideoViewFragment : Fragment() {
 
     companion object {
         private val TAG = VideoIntentFragment::class.qualifiedName
-        private val VID_URI = "videoUri"
-
         @JvmStatic fun newInstance() = VideoViewFragment()
     }
 
