@@ -12,6 +12,10 @@ class MainActivity : AppCompatActivity(), VideoIntentFragment.OnFragmentVideoUri
 
     override fun onFragmentVideoUri(uri: Uri?) {
         Log.d(TAG, "video uri: $uri")
+        if (uri != null) {
+            val videoViewFragment = VideoViewFragment.newInstance(uri)
+            replaceFragment(videoViewFragment)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

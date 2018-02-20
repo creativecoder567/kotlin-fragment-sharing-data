@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_video_view.*
 
 
 /**
@@ -25,6 +26,25 @@ class VideoViewFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        videoView.setVideoURI(videoUri)
+        videoView.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        videoView.pause()
+    }
+
+    override fun onStop() {
+        videoView.stopPlayback()
+
+        super.onStop()
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -32,6 +52,7 @@ class VideoViewFragment : Fragment() {
     }
 
     companion object {
+        private val TAG = VideoIntentFragment::class.qualifiedName
         private val VID_URI = "videoUri"
 
         fun newInstance(uri: Uri): VideoViewFragment {
