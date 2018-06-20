@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_video_view.*
 class VideoViewFragment : Fragment() {
 
     private val videoUriViewModel by lazy {
-        ViewModelProviders.of(activity).get(VideoUriViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(VideoUriViewModel::class.java)
     }
 
     override fun onStart() {
@@ -42,10 +42,8 @@ class VideoViewFragment : Fragment() {
         super.onStop()
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_video_view, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_video_view, container, false)
     }
 
     companion object {

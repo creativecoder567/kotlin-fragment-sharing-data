@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_video_intent.*
 
 
@@ -20,26 +21,16 @@ class VideoIntentFragment : Fragment() {
     private var videoUri: Uri? = null
     private val VIDEO_APP_REQUEST_CODE = 1000
     private val videoUriViewModel by lazy {
-        ViewModelProviders.of(activity).get(VideoUriViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(VideoUriViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_video_intent, container, false)
-    }
-
-    private fun startVideoViewFragment() {
-        val videoViewFragment = VideoViewFragment.newInstance()
-        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, videoViewFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_video_intent, container, false)
     }
 
     private fun callVideoApp() {
         val videoCaptureIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
-        if (videoCaptureIntent.resolveActivity(activity.packageManager) != null) {
+        if (videoCaptureIntent.resolveActivity(activity?.packageManager) != null) {
             startActivityForResult(videoCaptureIntent, VIDEO_APP_REQUEST_CODE)
         }
     }
@@ -67,7 +58,7 @@ class VideoIntentFragment : Fragment() {
             // Using the ViewModel to pass the videoUri
             if (videoUri != null) {
                 videoUriViewModel.videoUri = videoUri
-                startVideoViewFragment()
+                it.findNavController().navigate(R.id.action_videoIntentFragment_to_videoViewFragment)
             }
         }
     }
